@@ -1,41 +1,21 @@
 services:
-  - name: mariadb
-    type: private_service
-    env: docker
-    image: mariadb:10.7
-    envVars:
-      - key: MYSQL_ROOT_PASSWORD
-        value: your_root_password
-      - key: MYSQL_DATABASE
-        value: glpi
-      - key: MYSQL_USER
-        value: your_user
-      - key: MYSQL_PASSWORD
-        value: your_password
-    disk:
-      name: mariadb-data
-      mountPath: /var/lib/mysql
-      sizeGB: 5
-    restartPolicy: always
-
   - name: glpi
     type: web
     env: docker
     image: diouxx/glpi
     envVars:
       - key: GLPI_DB_HOST
-        value: mariadb
+        value: YOUR_RENDER_DB_HOST
       - key: GLPI_DB_NAME
-        value: glpi
+        value: YOUR_DATABASE_NAME
       - key: GLPI_DB_USER
-        value: your_user
+        value: YOUR_DATABASE_USER
       - key: GLPI_DB_PASSWORD
-        value: your_password
+        value: YOUR_DATABASE_PASSWORD
       - key: TIMEZONE
         value: Europe/Brussels
     disk:
       name: glpi-data
       mountPath: /var/www/html/glpi
-      sizeGB: 5
-    restartPolicy: always
+      sizeGB: 1
     healthCheckPath: "/install/install.php"
